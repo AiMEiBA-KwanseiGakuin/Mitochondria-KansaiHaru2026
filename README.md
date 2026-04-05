@@ -1,63 +1,84 @@
 # Mitochondria-KansaiHaru2026
-関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ  
-(このarchiveブランチは大会当日に使用したコードとその仕様をまとめています。)
+
+関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ
+(このdevelopブランチは大会当日後に仕様変更・機能追加したコードをまとめてます。)
 
 ## 概要
-- DualShock4+ESP32でロボットの操縦を行う。  
-(保険として,iPhone/Android端末およびPCなどのシリアル通信が可能な機器からの操縦も可能)
+
+* DualShock4+ESP32でロボットの操縦を行う。
+  (保険として,iPhone/Android端末およびPCなどのシリアル通信が可能な機器、**ESPNOW**からの操縦も可能)
 
 ## 実行環境
-- Arduino IDE ver:2.3.8
-- ESP32 ver:4.1.8
-- RemoteXY ver:4.1.8
-- PS4Controller ver:1.1.0
-- PCA9685.h (https://akizukidenshi.com/catalog/g/g110350/)
+
+* Arduino IDE ver:2.3.8
+* ESP32 ver:4.1.8
+* RemoteXY ver:4.1.8
+* PS4Controller ver:1.1.0
+* PCA9685.h ([https://akizukidenshi.com/catalog/g/g110350/](https://akizukidenshi.com/catalog/g/g110350/))
 
 ## 機体
-- 機体は4輪オムニホール+ラックアンドピニオンによるやぐら保持機構、サーボモーター4つからなるリング保持アームで構成される。
-- DCモーターはツカサモーター+IBT_2、サーボモーターはSG-90とMG996+PCA9685、電源としてDCモーターにはレスコンバッテリー(LeFe12V)、マイコンとサーボモーターは乾電池4本直列の電池ボックス各1個を使用
+
+* 機体は4輪オムニホール+ラックアンドピニオンによるやぐら保持機構、サーボモーター4つからなるリング保持アームで構成される。
+* DCモーターはツカサモーター+IBT\_2、サーボモーターはSG-90とMG996+PCA9685、電源としてDCモーターにはレスコンバッテリー(LeFe12V)、マイコンとサーボモーターは乾電池4本直列の電池ボックス各1個を使用
 
 ## 使用したGPIOピン
-- 足回り:18,5,2,15,14,12,26,27
-- やぐら:25,33
-- PCA9685:21,22
-- LED:32,0,4
+
+* 足回り：18,5,2,15,14,12,26,27
+* やぐら：25,33
+* PCA9685：21,22
+* LED：32,0,4
 
 ## 操縦(DualShock4)
-- 足回りは左ジョイスティックによる8方向への平行移動とR2/L2ボタンによる旋回、Shareボタンによる速度切り替え(チャタリングあり)
-- やぐら保持機構は左右ボタンで開閉
-- リング保持アームは右ジョイスティックで手首のY･Z軸を移動、〇/✕ボタンで手首関節の角度を調節、R1/L1ボタンでハンド部の開閉
-  加えて、△/☐ボタンとその同時押しによるワーク回収位置とワークシュート位置、待機位置への移動
-- コントローラー上部のパッドを押し込むことによりコントローラーからの入力を遮断(通信そのものは維持して再度操縦状態への切り替えも可能)(チャタリングあり)
-- Share/Optionsボタン同時押しでモーター出力を止め、LEDを点滅(アピール用)
+
+* 足回り
+  * 左ジョイスティックによる全方向の平行移動(振れ幅で低速/高速を切り替え)
+  * R2/L2ボタンによる旋回(旋回速度は別で指定)
+  * 加速度制御で機体の揺れ軽減
+* やぐら保持機構
+  * 左右ボタンで開閉
+* リング保持アーム
+  * 右ジョイスティックで手首のY･Z軸を移動
+  * 〇/✖ +下ボタンで肩関節の角度調節
+  * △/☐ +下ボタンで肘関節の角度調節
+  * R1/L1ボタンで手首関節の角度調節
+  * △/☐ボタンでハンド部の開閉
+  * 〇/✕/上ボタンでワーク回収位置/ワークシュート位置/待機位置へ移動
+* その他
+  * コントローラー上部のパッドを押し込むことによりコントローラーからの入力を遮断(通信そのものは維持して再度操縦状態への切り替えも可能)
+  * Share/Optionsボタン同時押しでモーター出力を止め、LEDを点滅(アピール用)
 
 ## プログラム解説
+
 バカ丁寧なコメントを書いたので見ればだいたい何やってるかはわかるはず...?
+
 ### 設計思想
-- どこに何があるかわかるコードを書く！
+
+* どこに何があるかわかるコードを書く！
   →入力と出力をそれぞれファイルに分けて管理
-- 土壇場の仕様変更に対応しやすくする
+* 土壇場の仕様変更に対応しやすくする
   →操縦方式や操作ロジックはメインに残して変更を容易に
-- 機能単位での流用をやりやすくする
+* 機能単位での流用をやりやすくする
   →適度な抽象化を心がける(実際できてるかどうかは納期との兼ね合いもあって怪しい)
 
 ### ファイル構成
-Final/  
-　├─Final.ino  
-　 |　　　//メインプログラムのファイル  
-　├─SwitchMode.h  
-　 |　　　//操縦モード切替用  
-　├─Rimocon_RemoteXY.h  
-　 |　　　//RemoteXYの設定用  
-　├─Rimocon_Serial.h  
-　 |　　　//シリアル通信の入力受け取り用  
-　├─OmuniLeg.h  
-　 |　　　//足回りとやぐら機構制御用  
-　└─IKArm.h  
-　  　　　//アーム制御用  
+
+Final/
+　├─Final.ino
+　 |　　　//メインプログラムのファイル
+　├─SwitchMode.h
+　 |　　　//操縦モード切替用
+　├─Rimocon\_RemoteXY.h
+　 |　　　//RemoteXYの設定用
+　├─Rimocon\_Serial.h
+　 |　　　//シリアル通信の入力受け取り用
+　├─OmuniLeg.h
+　 |　　　//足回りとやぐら機構制御用
+　└─IKArm.h
+　  　　　//アーム制御用
 (ツリーの書き方の正解わからんすぎる...)
 
 ### 定数
+
 ```cpp
 //--出力用定数--//
 constexpr int DC_default_speed = 150; //             櫓用アームの回転速度(足回りは255)[n/255]
@@ -84,7 +105,9 @@ constexpr int ArmLength[] = {36, 26, 21}; // アーム関節長さ(3個目は不
 constexpr int InitalAngle[] = {0, 0, 90}; // アームのサーボ取付角度(完全折り畳み時が0°)
 constexpr int LEDpins[]={32, 4, 0}; //       動作チェック用LEDのピン(接続,アーム閾値,低速走行)
 ```
+
 ### 変数
+
 ```cpp
 //--入力用変数--//
 bool connection_flag; //                      接続確認用
@@ -101,8 +124,11 @@ bool arm_button_init, arm_button_pick, arm_button_drop;
   //                                          アームの指定位置コマンド
 bool finger_button_UP, finger_button_DOWN; // ハンドの開閉
 ```
+
 ### 関数,構造体,クラスなど
+
 #### setup関数
+
 ```cpp
 void setup(){
 	// デバッグ兼シミュレータ用シリアル通信 (本番ではコメントアウトOK)
@@ -133,7 +159,9 @@ void setup(){
   }
 }
 ```
+
 #### loop関数
+
 ```cpp
 void loop(){
   //--get inputs--//
@@ -210,15 +238,21 @@ void loop(){
 }
 
 ```
-#### Rimocon_Serial.h
-RemoteXY関連の設定部分を隔離したもの。  
-BLE(Bluetooth Low Energy)とBluetooth classic (Android版のみ)を切り替える改造をしてある。  
-2個目のstructに入力変数の名前と説明が書いてあるので、変更時はここを参照してSwitchMode.hの関数内を書き換える。  
-**UI変更時はcopy configulationから#pragma pack(push, 1)と#pragma pack(pop)の間だけを置き換えること！**  
-#### Rimocon_RemoteXY.h
-シリアル通信への対応用。  
+
+#### Rimocon\_Serial.h
+
+RemoteXY関連の設定部分を隔離したもの。
+BLE(Bluetooth Low Energy)とBluetooth classic (Android版のみ)を切り替える改造をしてある。
+2個目のstructに入力変数の名前と説明が書いてあるので、変更時はここを参照してSwitchMode.hの関数内を書き換える。
+**UI変更時はcopy configulationから#pragma pack(push, 1)と#pragma pack(pop)の間だけを置き換えること！**
+
+#### Rimocon\_RemoteXY.h
+
+シリアル通信への対応用。
 各入力をコンマ区切りで受け取って入力用変数に格納する。実は動かしたことがないのでどんな不具合が潜んでるかわからん。
+
 #### OmuniLeg.h
+
 ```cpp
 inline void setdirection(float inputAngle, int& direcX, int& direcY);
 // else if でジョイスティックの入力角度からXY軸の移動方向(+1/0/-1)を指定するだけの脳筋コード
@@ -232,7 +266,9 @@ inline void driveomuni(int direcX, int direcY, int turn, int speedVal = DC_defau
 // setdirectionで指定したXY軸の移動方向から各モーター分のdrivemotorする関数。
 // 一度signを挟むことでどの向きでも同じ速度でモーターが回転する。(合力としての機体の移動速度は知らん←オムニの摩擦による抵抗が絡むため)
 ```
+
 #### IKArm.h
+
 ```cpp
 inline float clip2pi(float ang);
  // 便利関数その2　計算後の角度をそのまま扱うと負の値や2π以上になったりして始末が悪いので0~2πに収める
@@ -271,5 +307,7 @@ class Arm{ // 肘と肩以外の関節もまとめて制御した方が良いに
   void updateServos();//                全サーボモーターの角度をPCA9685に渡して動かしてもらう(PCA9685未接続時はloopでの呼び出し部分をコメントアウトすること)  
 };
 ```
+
 ---
-作成者:金栄智治(https://github.com/Tomoooji)
+
+作成者:金栄智治([https://github.com/Tomoooj](https://github.com/Tomoooji)
