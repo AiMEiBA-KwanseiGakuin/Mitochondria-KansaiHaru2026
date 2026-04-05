@@ -1,16 +1,17 @@
 # Mitochondria-KansaiHaru2026
-関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ
-このarchiveブランチは大会当日に使用したコードとその仕様をまとめてます。
+関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ  
+(このarchiveブランチは大会当日に使用したコードとその仕様をまとめています。)
+---
+## 概要
+- DualShock4+ESP32でロボットの操縦を行う。  
+(保険として,iPhone/Android端末およびPCなどのシリアル通信が可能な機器からの操縦も可能)
+
 ## 実行環境
 - Arduino IDE ver:2.3.8
 - ESP32 ver:4.1.8
 - RemoteXY ver:4.1.8
 - PS4Controller ver:1.1.0
 - PCA9685.h (https://akizukidenshi.com/catalog/g/g110350/)
-
-## 概要
-- DualShock4+ESP32でロボットの操縦を行う。  
-(保険として,iPhone/Android端末およびPCなどのシリアル通信が可能な機器からの操縦も可能)
 
 ## 機体
 - 機体は4輪オムニホール+ラックアンドピニオンによるやぐら保持機構、サーボモーター4つからなるリング保持アームで構成される。
@@ -30,4 +31,17 @@
 - コントローラー上部のパッドを押し込むことによりコントローラーからの入力を遮断(通信そのものは維持して再度操縦状態への切り替えも可能)(チャタリングあり)
 - Share/Optionsボタン同時押しでモーター出力を止め、LEDを点滅(アピール用)
 
-
+## プログラム解説
+### 設計思想
+### ファイル構成
+- Final.ino  
+- SwitchMode.h  
+- Rimocon_RemoteXY.h  
+- Rimocon_Serial.h  
+- OmuniLeg.h  
+- IKArm.h  
+### 定数
+### 変数
+### 関数
+---
+作成者:金栄智治(https://github.com/Tomoooji)
