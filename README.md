@@ -1,5 +1,6 @@
 # Mitochondria-KansaiHaru2026
 関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ
+このarchiveブランチは大会当日に使用したコードとその仕様をまとめてます。
 ## 実行環境
 - Arduino IDE ver:2.3.8
 - ESP32 ver:4.1.8
