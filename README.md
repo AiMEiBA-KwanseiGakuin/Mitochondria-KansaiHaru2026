@@ -34,13 +34,13 @@
 ## プログラム解説
 ### 設計思想
 ### ファイル構成
-Final
-  -Final.ino  
-  -SwitchMode.h  
-  -Rimocon_RemoteXY.h  
-  -Rimocon_Serial.h  
-  -OmuniLeg.h  
-  -IKArm.h  
+Final  
+    -Final.ino  
+    -SwitchMode.h  
+    -Rimocon_RemoteXY.h  
+    -Rimocon_Serial.h  
+    -OmuniLeg.h  
+    -IKArm.h  
 ### 定数
 ### 変数
 ### 関数
