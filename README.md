@@ -1,7 +1,7 @@
 # Mitochondria-KansaiHaru2026
 関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ  
 (このarchiveブランチは大会当日に使用したコードとその仕様をまとめています。)
----
+
 ## 概要
 - DualShock4+ESP32でロボットの操縦を行う。  
 (保険として,iPhone/Android端末およびPCなどのシリアル通信が可能な機器からの操縦も可能)
