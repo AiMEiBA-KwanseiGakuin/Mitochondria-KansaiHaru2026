@@ -101,7 +101,7 @@ bool arm_button_init, arm_button_pick, arm_button_drop;
   //                                          アームの指定位置コマンド
 bool finger_button_UP, finger_button_DOWN; // ハンドの開閉
 ```
-### 関数
+### 関数,構造体,クラスなど
 #### setup関数
 ```cpp
 void setup(){
@@ -209,6 +209,12 @@ void loop(){
   //RemoteXYEngine.delay(10); // RemoteXYを使うときはこっち
 }
 
+```
+#### Rimocon_Serial.h
+```cpp
+```
+#### Rimocon_RemoteXY.h
+```cpp
 ```
 #### OmuniLeg.h
 ```cpp
