@@ -1,1 +1,2 @@
 # Mitochondria-KansaiHaru2026
+関西春ロボ2026の機体(Mitochondria)のコード整理用リポジトリ
