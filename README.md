@@ -42,18 +42,18 @@
   →適度な抽象化を心がける(実際できてるかどうかは納期との兼ね合いもあって怪しい)
 ### ファイル構成
 └Final/  
- ├─Final.ino  
-  |  メインプログラムのファイル  
- ├─SwitchMode.h  
-  |  操縦モード切替用  
- ├─Rimocon_RemoteXY.h  
-  |  RemoteXYの設定用  
- ├─Rimocon_Serial.h  
-  |  シリアル通信の入力受け取り用  
- ├─OmuniLeg.h  
-  |  足回りとやぐら機構制御用  
- └─IKArm.h  
-     アーム制御用
+├─Final.ino  
+|  メインプログラムのファイル  
+├─SwitchMode.h  
+|  操縦モード切替用  
+├─Rimocon_RemoteXY.h  
+|  RemoteXYの設定用  
+├─Rimocon_Serial.h  
+|  シリアル通信の入力受け取り用  
+├─OmuniLeg.h  
+|  足回りとやぐら機構制御用  
+└─IKArm.h  
+  アーム制御用
 ### 定数
 ### 変数
 ### 関数
