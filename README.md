@@ -211,11 +211,12 @@ void loop(){
 
 ```
 #### Rimocon_Serial.h
-```cpp
-```
+RemoteXY関連の設定部分を隔離したもの。  
+BLE(Bluetooth Low Energy)とBluetooth classic (Android版のみ)を切り替える改造をしてある。  
+2個目のstructに入力変数の名前と説明が書いてあるので、変更時はここを参照してSwitchMode.hの関数内を書き換える。  
+**UI変更時はcopy configulationから#pragma pack(push, 1)と#pragma pack(pop)の間だけを置き換えること！**  
 #### Rimocon_RemoteXY.h
-```cpp
-```
+シリアル通信への対応用。あとでなんとかするかもしれないし、しないかもしれない  
 #### OmuniLeg.h
 ```cpp
 inline void setdirection(float inputAngle, int& direcX, int& direcY);
