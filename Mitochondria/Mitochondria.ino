@@ -32,7 +32,7 @@ constexpr int LEDpins[]={17, 4, 0};
 #include "PCAServos.h"
 
 //Arm sakuarm(ArmLength, InitalAngle);
-ServoMotors Arm = ServoMotors(false);
+ServoMotors Arm = ServoMotors();
 DCmotors DCs;
 
 void setup(){
@@ -64,7 +64,7 @@ void loop(){
   //gyro.update();
 
   //--process logic--//
-  /*if(appeal_button){
+  if(appeal_button){
       for(int pin: DCpins){
       ledcWrite(pin,0);
     }
@@ -79,7 +79,7 @@ void loop(){
     delay(400);
     //RemoteXYEngine.delay(400);
   }
-  else */if(connection_flag){
+  else if(connection_flag){
 
   //-manage omuni-//
     if(isStickmoved(leg_joystick_x, leg_joystick_y, range_ignoreLstick)){
